@@ -24,6 +24,17 @@ if (HELLOIMGUI_USE_SDL_OPENGL3)
         ${imgui_examles_dir}/imgui_impl_sdl.cpp
         )
 endif()
+if (HELLOIMGUI_USE_SDL_DIRECTX11)
+    target_compile_definitions(${target_name} PRIVATE -DHELLOIMGUI_USE_SDL_DIRECTX11)
+    target_link_libraries(${target_name} PUBLIC SDL2-static D3D11.lib)
+    target_sources(${target_name} PRIVATE
+        ${imgui_examles_dir}/imgui_impl_dx11.h
+        ${imgui_examles_dir}/imgui_impl_dx11.cpp
+        ${imgui_examles_dir}/imgui_impl_sdl.h
+        ${imgui_examles_dir}/imgui_impl_sdl.cpp
+        )
+endif()
+
 if (HELLOIMGUI_USE_GLFW_OPENGL3)
     target_compile_definitions(${target_name} PRIVATE -DHELLOIMGUI_USE_GLFW_OPENGL3)
     target_link_libraries(${target_name} PUBLIC glfw)

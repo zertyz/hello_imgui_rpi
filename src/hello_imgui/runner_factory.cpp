@@ -4,6 +4,7 @@
 #include "hello_imgui/backend_impls/runner_glfw_opengl3.h"
 #include "hello_imgui/backend_impls/runner_qt.h"
 #include "hello_imgui/backend_impls/runner_sdl_opengl3.h"
+#include "hello_imgui/backend_impls/runner_sdl_directx11.h"
 
 namespace HelloImGui
 {
@@ -21,6 +22,14 @@ std::unique_ptr<AbstractRunner> FactorRunnerSdlOpenGl3(RunnerParams& params)
 }
 #endif
 
+#ifdef HELLOIMGUI_USE_SDL_DIRECTX11
+std::unique_ptr<AbstractRunner> FactorRunnerSdlDirectX11(RunnerParams& params)
+{
+    return std::make_unique<RunnerSdlDirectX11>(params);
+}
+#endif
+
+
 #ifdef HELLOIMGUI_USE_QT
 std::unique_ptr<AbstractRunner> FactorRunnerQt(RunnerParams & params)
 {
@@ -34,6 +43,9 @@ std::unique_ptr<AbstractRunner> FactorRunnerEmscripten() { return std::make_uniq
 
 std::unique_ptr<AbstractRunner> FactorRunner(RunnerParams& params)
 {
+#ifdef HELLOIMGUI_USE_SDL_DIRECTX11
+    return FactorRunnerSdlDirectX11(params);
+#endif
 #ifdef HELLOIMGUI_USE_SDL_OPENGL3
     return FactorRunnerSdlOpenGl3(params);
 #endif

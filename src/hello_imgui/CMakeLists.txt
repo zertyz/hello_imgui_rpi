@@ -94,6 +94,23 @@ if (HELLOIMGUI_USE_GLFW_OPENGL3)
         )
 endif()
 
+if (HELLOIMGUI_USE_METAL)
+    target_compile_definitions(${target_name} PUBLIC -DHELLOIMGUI_USE_METAL)
+    set(imgui_metal_dir ${imgui_examples_dir}/example_apple_metal/Shared/)
+    target_sources(${target_name} PRIVATE
+        ${imgui_examples_dir}/imgui_impl_osx.h
+        ${imgui_examples_dir}/imgui_impl_osx.mm
+        ${imgui_metal_dir}/AppDelegate.h
+        ${imgui_metal_dir}/AppDelegate.m
+        # main.m : to redo
+        # Renderer.*: to redo
+        ${imgui_metal_dir}/ViewController.h
+        ${imgui_metal_dir}/ViewController.mm
+        )
+    target_include_directories(${target_name} PRIVATE ${imgui_metal_dir} ${imgui_examples_dir})
+endif()
+
+
 if (HELLOIMGUI_USE_QT)
     target_compile_definitions(${target_name} PUBLIC HELLOIMGUI_USE_QT)
     target_link_libraries(${target_name} PUBLIC qt_imgui_quick)

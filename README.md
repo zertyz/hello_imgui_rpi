@@ -9,7 +9,7 @@ The build process is still very "hacky": _HelloImGui_ uses Microsoft's _vcpkg_ f
 So, to build for Raspberry Pi, you need:
 1) Clone this repo:
 `````sh
-git clone 'https://github.com/zertyz/hello_imgui_rpi'
+git clone --recurse-submodules 'https://github.com/zertyz/hello_imgui_rpi'
 `````
 2) Apply the patches:
 `````sh

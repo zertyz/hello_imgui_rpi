@@ -7,11 +7,26 @@ Besides these patches, it is also required that SDL2 is compiled to use the clos
 The build process is still very "hacky": _HelloImGui_ uses Microsoft's _vcpkg_ for dependency managenet and that had to be overcomed, since _vcpkg_ is not available for ARM architectures.
 
 So, to build for Raspberry Pi, you need:
-1) Clone this repo: git clone 'https://github.com/zertyz/hello_imgui_rpi'
-2) Apply the patches: cd external/imgui; git apply ../../external.imgui.rPi.patch; cd -; git apply hello_imgui.rPi.patch
-3) Run CMAKE as far as it can go (it will not produce valid scripts): mkdir build; cd build; cmake -DCMAKE_TOOLCHAIN_FILE=../rpi.cmake -DCMAKE_BUILD_TYPE=Release -DHELLOIMGUI_USE_SDL_OPENGL3=ON ..
-4) Fix the produced scripts -- solving SDL2 dependencies: find -name link.txt -exec sed -i -s "s|-lSDL2::SDL2-static|`pkg-config --static --libs sdl2`|" "{}" \; -exec sed -i -s 's|-static ||' "{}" \; -exec sed -i -s 's|/usr/lib/libSDL2main.a ||' "{}" \; -ls
-5) Now you can MAKE the project: make; find -type f -executable -ls
+1) Clone this repo:
+`````sh
+git clone 'https://github.com/zertyz/hello_imgui_rpi'
+`````
+2) Apply the patches:
+`````sh
+cd external/imgui; git apply ../../external.imgui.rPi.patch; cd -; git apply hello_imgui.rPi.patch
+`````
+3) Run CMAKE as far as it can go (it will not produce valid scripts):
+`````sh
+mkdir build; cd build; cmake -DCMAKE_TOOLCHAIN_FILE=../rpi.cmake -DCMAKE_BUILD_TYPE=Release -DHELLOIMGUI_USE_SDL_OPENGL3=ON ..
+`````
+4) Fix the produced scripts -- solving SDL2 dependencies:
+`````sh
+find -name link.txt -exec sed -i -s "s|-lSDL2::SDL2-static|`pkg-config --static --libs sdl2`|" "{}" \; -exec sed -i -s 's|-static ||' "{}" \; -exec sed -i -s 's|/usr/lib/libSDL2main.a ||' "{}" \; -ls
+`````
+5) Now you can MAKE the project:
+`````sh
+make; find -type f -executable -ls
+`````
 
 And you'll get all the demos, dinamically linked to SDL2 and perfectly running at 60fps, 1920x1080 (full HD) -- tested on Raspberry Pi 1.
 

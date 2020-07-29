@@ -2,7 +2,7 @@
 
 _HelloImGUIrPi_ is a fork of the very fine _HelloImGui_ with the patches to allow it to run fullscreen (without X) on Raspberry Pi's 0, 1, 2 & 3 using the Broadcom Drivers (not tested with FKMS nor KMS drivers).
 
-Besides these patches, it is also required that SDL2 is compiled to use the (legacy?) closed-source Broadcom Drivers -- for reference, you may follow the build configuration of this package -- https://aur.archlinux.org/packages/sdl2-rpi/
+Besides these patches, it is also required that SDL2 is compiled to use the closed-source Broadcom Drivers -- for reference, you may follow the build configuration of this package -- https://aur.archlinux.org/packages/sdl2-rpi/
 
 The build process is still very "hacky": _HelloImGui_ uses Microsoft's _vcpkg_ for dependency managenet and that had to be overcomed, since _vcpkg_ is not available for ARM architectures.
 
@@ -13,7 +13,7 @@ So, to build for Raspberry Pi, you need:
 4) Fix the produced scripts -- solving SDL2 dependencies: find -name link.txt -exec sed -i -s "s|-lSDL2::SDL2-static|`pkg-config --static --libs sdl2`|" "{}" \; -exec sed -i -s 's|-static ||' "{}" \; -exec sed -i -s 's|/usr/lib/libSDL2main.a ||' "{}" \; -ls
 5) Now you can MAKE the project: make; find -type f -executable -ls
 
-And you'll get all the demos, dinamically linked to SDL2 and perfectly running at 60fps (tested on Raspberry Pi 1).
+And you'll get all the demos, dinamically linked to SDL2 and perfectly running at 60fps, 1920x1080 (full HD) -- tested on Raspberry Pi 1.
 
 NOTE: Don't forget to set, at least, 64M for the GPU.
 
